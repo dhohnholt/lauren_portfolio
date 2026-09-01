@@ -43,6 +43,8 @@ Run `20260901022844_add_headshot_framing_controls.sql` to add the saved headshot
 
 Run `20260901023816_add_headshot_horizontal_position.sql` if the framing migration was already applied before horizontal positioning was added.
 
+Run `20260901024728_repair_headshot_settings_save.sql` to repair any missing headshot framing rows and allow the admin editor to safely create missing settings during save.
+
 ## Contact email notifications
 
 The Contact form calls the `notify-contact` Supabase Edge Function. The function validates and saves each message to the private admin inbox, then sends a branded notification to `laurenhohnholt@gmail.com` through Resend.

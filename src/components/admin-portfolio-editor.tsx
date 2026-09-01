@@ -96,15 +96,18 @@ export function AdminPortfolioEditor() {
     setBusy(true); setMessage("");
     const colorValues = Object.fromEntries(COLOR_FIELDS.map((field) => [field, settings[field]]));
     const updatedAt = new Date().toISOString();
-    const [themeResult, headshotResult, zoomResult, shiftXResult, shiftYResult] = await Promise.all([
+    const [themeResult, headshotResult] = await Promise.all([
       supabase.from("portfolio_settings").update({ ...colorValues, updated_at: new Date().toISOString(), updated_by: user.id }).eq("id", 1).select("id").single(),
-      supabase.from("site_settings").update({ value: headshotUrl, updated_at: updatedAt, updated_by: user.id }).eq("key", "headshot_url").select("key").single(),
-      supabase.from("site_settings").update({ value: String(headshotZoom), updated_at: updatedAt, updated_by: user.id }).eq("key", "headshot_zoom").select("key").single(),
-      supabase.from("site_settings").update({ value: String(headshotShiftX), updated_at: updatedAt, updated_by: user.id }).eq("key", "headshot_shift_x").select("key").single(),
-      supabase.from("site_settings").update({ value: String(headshotShiftY), updated_at: updatedAt, updated_by: user.id }).eq("key", "headshot_shift_y").select("key").single(),
+      supabase.from("site_settings").upsert([
+        { key: "headshot_url", value: headshotUrl, updated_at: updatedAt, updated_by: user.id },
+        { key: "headshot_zoom", value: String(headshotZoom), updated_at: updatedAt, updated_by: user.id },
+        { key: "headshot_shift_x", value: String(headshotShiftX), updated_at: updatedAt, updated_by: user.id },
+        { key: "headshot_shift_y", value: String(headshotShiftY), updated_at: updatedAt, updated_by: user.id },
+      ], { onConflict: "key" }).select("key"),
     ]);
-    const error = themeResult.error || headshotResult.error || zoomResult.error || shiftXResult.error || shiftYResult.error;
-    setMessage(error ? error.message : "Brand colors and headshot saved."); setBusy(false);
+    const error = themeResult.error || headshotResult.error;
+    const allHeadshotSettingsSaved = headshotResult.data?.length === 4;
+    setMessage(error ? error.message : allHeadshotSettingsSaved ? "Brand colors and headshot saved." : "The image settings could not all be saved. Run the latest Supabase migration and try again."); setBusy(false);
   }
 
   async function saveProjects(event: FormEvent<HTMLFormElement>) {
