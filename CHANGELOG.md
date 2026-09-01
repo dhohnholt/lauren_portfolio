@@ -51,3 +51,4 @@
 - Added an authenticated-only `Command + L + H` held-key shortcut for opening the admin studio, with key-state cleanup when the browser loses focus.
 - Changed the homepage name title to the berry brand color.
 - Added a global `Command + H` shortcut for returning to the homepage while preserving the authenticated `Command + L + H` admin chord.
+- Restyled the Contact page with a paper background, olive form panel, berry framing, and high-contrast cream and white field typography.

@@ -146,13 +146,17 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
 .resume-contact a { overflow-wrap:anywhere; line-height:1.45; }
 .resume-contact a:hover { color:var(--cream); }
 .muted { opacity:.64; }
-.contact-page { background:var(--sand); }
+.contact-page { background:var(--paper); }
 .contact-grid { display:grid; grid-template-columns:1fr .9fr; gap:10vw; align-items:start; }
-.contact-form { background:var(--paper); padding:32px; display:grid; gap:22px; }
-.contact-form label { display:grid; gap:8px; font-size:.76rem; font-weight:800; text-transform:uppercase; letter-spacing:.12em; }
-.contact-form input,.contact-form textarea { width:100%; border:0; border-bottom:1px solid var(--ink); background:transparent; padding:12px 0; outline:none; text-transform:none; letter-spacing:0; resize:vertical; }
-.contact-form input:focus,.contact-form textarea:focus { border-color:var(--berry); box-shadow:0 2px 0 var(--berry); }
-.contact-form small { line-height:1.5; opacity:.68; }
+.contact-page .page-intro .eyebrow { color:var(--olive); }
+.contact-page .page-intro h1 { color:var(--berry); }
+.contact-form { background:var(--olive); color:var(--white); padding:32px; display:grid; gap:22px; border-top:6px solid var(--berry); box-shadow:14px 14px 0 color-mix(in srgb,var(--berry) 88%,transparent); }
+.contact-form label { display:grid; gap:8px; color:var(--cream); font-size:.76rem; font-weight:800; text-transform:uppercase; letter-spacing:.12em; }
+.contact-form input,.contact-form textarea { width:100%; border:0; border-bottom:1px solid rgba(255,255,255,.7); background:transparent; color:var(--white); padding:12px 0; outline:none; text-transform:none; letter-spacing:0; resize:vertical; }
+.contact-form input::placeholder,.contact-form textarea::placeholder { color:rgba(255,255,255,.62); opacity:1; }
+.contact-form input:focus,.contact-form textarea:focus { border-color:var(--cream); box-shadow:0 2px 0 var(--cream); }
+.contact-form .button-primary { background:var(--berry); color:var(--white); }
+.contact-form small { color:var(--cream); line-height:1.5; opacity:.82; }
 .form-honeypot { position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 .contact-status { min-height:1.5em; display:block; }
 .admin-page { background:var(--mist); }
