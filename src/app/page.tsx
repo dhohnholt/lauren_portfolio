@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { Headshot } from "@/components/headshot";
 import { ProjectViewer } from "@/components/project-viewer";
 
 export default function Home() {
   return (
     <main>
       <section className="hero section-shell" id="about">
-        <div className="portrait-mark" aria-label="Portrait placeholder for Lauren"><span>LH</span></div>
+        <div className="portrait-mark"><Headshot /></div>
         <div className="hero-copy">
           <p className="eyebrow">Designer · Creator · Problem solver</p>
           <h1>Hi, I&apos;m Lauren.</h1>
