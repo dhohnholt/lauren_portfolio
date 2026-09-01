@@ -33,7 +33,7 @@ export function ResumeContent() {
 
           <section className="resume-section">
             <div className="resume-section-heading"><h2>{content.sectionTitles.leadership}</h2></div>
-            <article className="resume-entry"><div className="resume-entry-heading"><div><h3>{content.leadership.title}</h3><p>{content.leadership.organization}</p></div>{content.leadership.date && <time>{content.leadership.date}</time>}</div><BulletList items={content.leadership.bullets} /></article>
+            {content.leadership.map((entry, index) => <article className="resume-entry" key={`${index}-${entry.title}`}><div className="resume-entry-heading"><div><h3>{entry.title}</h3><p>{entry.organization}</p></div>{entry.date && <time>{entry.date}</time>}</div><BulletList items={entry.bullets} /></article>)}
           </section>
 
           <section className="resume-section">

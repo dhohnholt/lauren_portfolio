@@ -17,7 +17,7 @@ export type ResumeContent = {
   summary: string;
   sectionTitles: { experience: string; leadership: string; projects: string };
   experience: ResumeExperience[];
-  leadership: ResumeExperience;
+  leadership: ResumeExperience[];
   projects: ResumeProject[];
   education: { degree: string; school: string; graduation: string; gpa: string };
   skills: { programming: string; tools: string; hardware: string };
@@ -28,7 +28,7 @@ export const DEFAULT_RESUME_CONTENT: ResumeContent = {
   eyebrow: "Résumé",
   title: "Engineering with a creative signal.",
   summary: "Senior Electrical Engineering student and IEEE officer with 2+ years of workplace experience, blending analytical engineering fundamentals with creative problem solving. Passionate musician with skills in circuit design, hardware assembly, and troubleshooting through independent audio electronics projects, including building custom guitar effects pedals.",
-  sectionTitles: { experience: "Work & audio", leadership: "Student organizations", projects: "Academic projects" },
+  sectionTitles: { experience: "Work & audio", leadership: "Leadership & community", projects: "Academic projects" },
   experience: [
     {
       title: "Sales Associate",
@@ -51,16 +51,28 @@ export const DEFAULT_RESUME_CONTENT: ResumeContent = {
       ],
     },
   ],
-  leadership: {
-    title: "Publicity and Multimedia Officer",
-    organization: "IEEE",
-    date: "",
-    bullets: [
-      "Spearheaded digital marketing and social media campaigns to boost branch engagement and event turnout.",
-      "Managed core online platforms, website updates, and member communications across the organization.",
-      "Captured and curated high-quality photo and multimedia archives to showcase branch events and history.",
-    ],
-  },
+  leadership: [
+    {
+      title: "Publicity and Multimedia Officer",
+      organization: "IEEE",
+      date: "",
+      bullets: [
+        "Spearheaded digital marketing and social media campaigns to boost branch engagement and event turnout.",
+        "Managed core online platforms, website updates, and member communications across the organization.",
+        "Captured and curated high-quality photo and multimedia archives to showcase branch events and history.",
+      ],
+    },
+    {
+      title: "Bringing People Together",
+      organization: "Friends across campus and beyond",
+      date: "",
+      bullets: [
+        "Takes the initiative to turn “we should get together” into an actual plan, coordinating dates, invitations, logistics, and supplies.",
+        "Hosts tea parties that bring the girls back together when they are home on breaks from colleges in different places.",
+        "Recently organized a camping trip to Glenwood, New Mexico, to hike the Catwalk—complete with travel plans, a supply list, and an unexpected lesson for the boys whose improperly rigged tent cover gave them a little rainwater bath.",
+      ],
+    },
+  ],
   projects: [
     {
       title: "Bacterial Incubator",
@@ -86,7 +98,11 @@ export function normalizeResumeContent(value: unknown): ResumeContent {
     ...candidate,
     sectionTitles: { ...DEFAULT_RESUME_CONTENT.sectionTitles, ...candidate.sectionTitles },
     experience: Array.isArray(candidate.experience) && candidate.experience.length ? candidate.experience : DEFAULT_RESUME_CONTENT.experience,
-    leadership: { ...DEFAULT_RESUME_CONTENT.leadership, ...candidate.leadership },
+    leadership: Array.isArray(candidate.leadership)
+      ? candidate.leadership
+      : candidate.leadership && typeof candidate.leadership === "object"
+        ? [candidate.leadership as ResumeExperience, DEFAULT_RESUME_CONTENT.leadership[1]]
+        : DEFAULT_RESUME_CONTENT.leadership,
     projects: Array.isArray(candidate.projects) ? candidate.projects : DEFAULT_RESUME_CONTENT.projects,
     education: { ...DEFAULT_RESUME_CONTENT.education, ...candidate.education },
     skills: { ...DEFAULT_RESUME_CONTENT.skills, ...candidate.skills },
