@@ -27,16 +27,17 @@ export function AdminKeyboardShortcut() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
-
     function handleKeyDown(event: KeyboardEvent) {
       const key = event.key.toLowerCase();
       pressedKeys.current.add(key);
 
-      if (event.metaKey && key === "l") event.preventDefault();
-      if (event.metaKey && pressedKeys.current.has("l") && pressedKeys.current.has("h")) {
+      if (isAuthenticated && event.metaKey && key === "l") event.preventDefault();
+      if (isAuthenticated && event.metaKey && pressedKeys.current.has("l") && pressedKeys.current.has("h")) {
         event.preventDefault();
         router.push("/admin");
+      } else if (event.metaKey && key === "h") {
+        event.preventDefault();
+        router.push("/");
       }
     }
 

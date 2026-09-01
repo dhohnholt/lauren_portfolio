@@ -50,3 +50,4 @@
 - Added admin controls for creating portfolio projects with copy, Canva presentation, and preview-image fields, plus flexible add/remove controls for projects shown on the résumé.
 - Added an authenticated-only `Command + L + H` held-key shortcut for opening the admin studio, with key-state cleanup when the browser loses focus.
 - Changed the homepage name title to the berry brand color.
+- Added a global `Command + H` shortcut for returning to the homepage while preserving the authenticated `Command + L + H` admin chord.
