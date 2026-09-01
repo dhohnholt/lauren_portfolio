@@ -33,3 +33,6 @@
 - Added a Supabase Edge Function that stores Contact submissions and sends branded Resend notifications to Lauren with one-click replies.
 - Added live headshot zoom and vertical-position sliders to the admin studio with saved framing on the public homepage.
 - Made the contact notification Edge Function dashboard-deployable with explicit, pinned Deno package specifiers.
+- Improved contact notification diagnostics so tests report whether a message was saved, whether Resend accepted the email, and the accepted email ID; the contact form no longer claims an email was sent when delivery could not be confirmed.
+- Replaced the résumé placeholder with Lauren's education, engineering projects, technical skills, IEEE leadership, work history, and audio experience.
+- Removed the decorative portrait label and added saved left-right positioning to the headshot framing controls.

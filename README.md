@@ -41,6 +41,8 @@ Run `20260901015757_add_admin_contact_inbox.sql` to let the public Contact form 
 
 Run `20260901022844_add_headshot_framing_controls.sql` to add the saved headshot zoom and vertical-position controls used by the admin Brand panel.
 
+Run `20260901023816_add_headshot_horizontal_position.sql` if the framing migration was already applied before horizontal positioning was added.
+
 ## Contact email notifications
 
 The Contact form calls the `notify-contact` Supabase Edge Function. The function validates and saves each message to the private admin inbox, then sends a branded notification to `laurenhohnholt@gmail.com` through Resend.
@@ -50,6 +52,31 @@ Set `RESEND_API_KEY` under Supabase Edge Function Secrets, then deploy the funct
 ```bash
 supabase functions deploy notify-contact
 ```
+
+Supabase Auth custom SMTP settings do not configure this function. It sends through
+the Resend HTTP API, so the Edge Function needs `RESEND_API_KEY`. Its sender defaults
+to `Lauren Hohnholt Portfolio <contact@laurenhohnholt.com>`; make sure
+`laurenhohnholt.com` is verified in Resend, or set a verified sender with the optional
+`CONTACT_FROM_EMAIL` Edge Function secret.
+
+The dashboard's generated `{ name: "Functions" }` invocation example is not a valid
+contact submission. Test with all required fields and inspect both `data` and `error`:
+
+```ts
+const { data, error } = await supabase.functions.invoke("notify-contact", {
+  body: {
+    name: "Email Test",
+    email: "your-address@example.com",
+    message: "This is a test of the portfolio contact notification.",
+  },
+});
+
+console.log({ data, error });
+```
+
+A successful Resend handoff returns `notificationSent: true` and an `emailId`. If the
+message was stored but Resend rejected it, the response returns `saved: true` and
+`notificationSent: false`; the provider's detailed error is available in the function log.
 
 The default sender is `Lauren Hohnholt Portfolio <contact@laurenhohnholt.com>`. If Resend is configured for a different verified sender, add a `CONTACT_FROM_EMAIL` Edge Function secret containing the complete sender value. Email delivery errors are logged by the function, while the original message remains available in `/admin`.
 

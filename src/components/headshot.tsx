@@ -9,6 +9,7 @@ export const DEFAULT_HEADSHOT_URL = "https://images.unsplash.com/photo-169989965
 export function Headshot() {
   const [url, setUrl] = useState(DEFAULT_HEADSHOT_URL);
   const [zoom, setZoom] = useState(100);
+  const [shiftX, setShiftX] = useState(0);
   const [shiftY, setShiftY] = useState(0);
   const [failed, setFailed] = useState(false);
 
@@ -18,11 +19,12 @@ export function Headshot() {
     void supabase
       .from("site_settings")
       .select("key, value")
-      .in("key", ["headshot_url", "headshot_zoom", "headshot_shift_y"])
+      .in("key", ["headshot_url", "headshot_zoom", "headshot_shift_x", "headshot_shift_y"])
       .then(({ data }) => {
         for (const setting of data ?? []) {
           if (setting.key === "headshot_url" && setting.value) setUrl(setting.value);
           if (setting.key === "headshot_zoom") setZoom(Math.min(200, Math.max(100, Number(setting.value) || 100)));
+          if (setting.key === "headshot_shift_x") setShiftX(Math.min(30, Math.max(-30, Number(setting.value) || 0)));
           if (setting.key === "headshot_shift_y") setShiftY(Math.min(30, Math.max(-30, Number(setting.value) || 0)));
         }
       });
@@ -37,7 +39,7 @@ export function Headshot() {
         src={url}
         alt="Lauren Hohnholt"
         fetchPriority="high"
-        style={{ transform: `translateY(${shiftY}%) scale(${zoom / 100})` }}
+        style={{ transform: `translate(${shiftX}%, ${shiftY}%) scale(${zoom / 100})` }}
         onError={() => setFailed(true)}
       />
     </span>

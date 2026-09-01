@@ -3,6 +3,12 @@
 import { FormEvent, useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 
+type NotifyContactResult = {
+  success?: boolean;
+  saved?: boolean;
+  notificationSent?: boolean;
+};
+
 export function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,9 +23,19 @@ export function ContactForm() {
     if (company) { setStatus("Thank you. Your message has been sent."); return; }
 
     setBusy(true); setStatus("");
-    const { error } = await supabase.functions.invoke("notify-contact", { body: { name: name.trim(), email: email.trim(), message: message.trim(), company } });
-    if (error) setStatus("We couldn't send your message. Please check the form and try again.");
-    else { setName(""); setEmail(""); setMessage(""); setStatus("Thank you—your message has been sent to Lauren."); }
+    const { data, error } = await supabase.functions.invoke<NotifyContactResult>("notify-contact", {
+      body: { name: name.trim(), email: email.trim(), message: message.trim(), company },
+    });
+
+    if (error || !data?.success) {
+      setStatus("We couldn't send your message. Please check the form and try again.");
+    } else if (data.saved && !data.notificationSent) {
+      setName(""); setEmail(""); setMessage("");
+      setStatus("Your message was saved in Lauren's private inbox, but the email notification could not be confirmed.");
+    } else {
+      setName(""); setEmail(""); setMessage("");
+      setStatus("Thank you—your message has been sent to Lauren.");
+    }
     setBusy(false);
   }
 

@@ -45,7 +45,7 @@ const notifyContact = {
     const company = cleanText(payload.company);
 
     // Silently accept bot submissions caught by the hidden field.
-    if (company) return Response.json({ success: true });
+    if (company) return Response.json({ success: true, saved: false, notificationSent: false });
 
     if (name.length < 1 || name.length > 100 || !emailPattern.test(email) || email.length > 254 || message.length < 10 || message.length > 3000) {
       return Response.json({ error: "Please check the contact form fields." }, { status: 400 });
@@ -66,7 +66,12 @@ const notifyContact = {
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     if (!resendApiKey) {
       console.error("RESEND_API_KEY is not configured");
-      return Response.json({ success: true, notificationSent: false });
+      return Response.json({
+        success: true,
+        saved: true,
+        notificationSent: false,
+        notificationError: "missing_resend_api_key",
+      });
     }
 
     const safeName = escapeHtml(name);
@@ -119,10 +124,26 @@ const notifyContact = {
 
     if (!emailResponse.ok) {
       console.error("Resend notification failed", emailResponse.status, await emailResponse.text());
-      return Response.json({ success: true, notificationSent: false });
+      return Response.json({
+        success: true,
+        saved: true,
+        notificationSent: false,
+        notificationError: "resend_rejected_request",
+      });
     }
 
-    return Response.json({ success: true, notificationSent: true });
+    const emailResult = await emailResponse.json() as { id?: string };
+    console.info("Contact notification accepted by Resend", {
+      messageId: savedMessage.id,
+      resendEmailId: emailResult.id,
+    });
+
+    return Response.json({
+      success: true,
+      saved: true,
+      notificationSent: true,
+      emailId: emailResult.id,
+    });
   }),
 };
 

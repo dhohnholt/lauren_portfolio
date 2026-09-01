@@ -1,12 +1,9 @@
 insert into public.site_settings (key, value)
-values
-  ('headshot_zoom', '100'),
-  ('headshot_shift_x', '0'),
-  ('headshot_shift_y', '0')
+values ('headshot_shift_x', '0')
 on conflict (key) do nothing;
 
-drop policy if exists "Public can read the headshot setting" on public.site_settings;
-drop policy if exists "Admins can update the headshot setting" on public.site_settings;
+drop policy if exists "Public can read headshot settings" on public.site_settings;
+drop policy if exists "Admins can update headshot settings" on public.site_settings;
 
 create policy "Public can read headshot settings"
 on public.site_settings
