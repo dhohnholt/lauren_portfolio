@@ -46,3 +46,5 @@
 - Polished the portfolio for mobile visitors with a full-width touch-friendly project viewer, larger controls, phone-safe forms and typography, and a more compact, horizontally scrollable admin workspace.
 - Added a branded olive presentation-loading placeholder with an on-theme creative quote and a smooth fade into each loaded Canva project.
 - Changed the résumé background to paper, removed the small green section labels that displaced headings, and made the three main résumé section titles editable from the admin workspace.
+- Refined the résumé sidebar with a berry background, olive framing accents, and high-contrast white, cream, and light-olive typography.
+- Added admin controls for creating portfolio projects with copy, Canva presentation, and preview-image fields, plus flexible add/remove controls for projects shown on the résumé.

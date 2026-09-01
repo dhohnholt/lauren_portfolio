@@ -33,6 +33,14 @@ export function AdminResumeEditor({ user, onStatus }: Props) {
     setContent((current) => ({ ...current, projects: current.projects.map((project, projectIndex) => projectIndex === index ? { ...project, ...values } : project) }));
   }
 
+  function addProject() {
+    setContent((current) => ({ ...current, projects: [...current.projects, { title: "", date: "", description: "" }] }));
+  }
+
+  function removeProject(index: number) {
+    setContent((current) => ({ ...current, projects: current.projects.filter((_, projectIndex) => projectIndex !== index) }));
+  }
+
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!supabase) return;
@@ -53,7 +61,7 @@ export function AdminResumeEditor({ user, onStatus }: Props) {
 
       <div className="field-section"><h3>Leadership</h3><label>Public section title<input value={content.sectionTitles.leadership} onChange={(event) => setContent({ ...content, sectionTitles: { ...content.sectionTitles, leadership: event.target.value } })} required /></label><div className="field-pair"><label>Position<input value={content.leadership.title} onChange={(event) => setContent({ ...content, leadership: { ...content.leadership, title: event.target.value } })} required /></label><label>Organization<input value={content.leadership.organization} onChange={(event) => setContent({ ...content, leadership: { ...content.leadership, organization: event.target.value } })} required /></label></div><label>Bullet points<textarea rows={5} value={toLines(content.leadership.bullets)} onChange={(event) => setContent({ ...content, leadership: { ...content.leadership, bullets: fromLines(event.target.value) } })} required /></label></div>
 
-      <div className="field-section"><h3>Academic projects</h3><label>Public section title<input value={content.sectionTitles.projects} onChange={(event) => setContent({ ...content, sectionTitles: { ...content.sectionTitles, projects: event.target.value } })} required /></label>{content.projects.map((project, index) => <fieldset className="resume-admin-entry" key={index}><legend>Project {index + 1}</legend><div className="field-pair"><label>Project title<input value={project.title} onChange={(event) => updateProject(index, { title: event.target.value })} required /></label><label>Date<input value={project.date} onChange={(event) => updateProject(index, { date: event.target.value })} required /></label></div><label>Description<textarea rows={5} value={project.description} onChange={(event) => updateProject(index, { description: event.target.value })} required /></label></fieldset>)}</div>
+      <div className="field-section"><h3>Academic projects</h3><label>Public section title<input value={content.sectionTitles.projects} onChange={(event) => setContent({ ...content, sectionTitles: { ...content.sectionTitles, projects: event.target.value } })} required /></label>{content.projects.map((project, index) => <fieldset className="resume-admin-entry" key={index}><legend>Project {index + 1}</legend><button className="text-button resume-project-remove" type="button" onClick={() => removeProject(index)}>Remove project</button><div className="field-pair"><label>Project title<input value={project.title} onChange={(event) => updateProject(index, { title: event.target.value })} required /></label><label>Date<input value={project.date} onChange={(event) => updateProject(index, { date: event.target.value })} required /></label></div><label>Description<textarea rows={5} value={project.description} onChange={(event) => updateProject(index, { description: event.target.value })} required /></label></fieldset>)}<button className="button button-quiet admin-add-button" type="button" onClick={addProject}>+ Add résumé project</button></div>
 
       <div className="field-section"><h3>Education</h3><label>Degree<input value={content.education.degree} onChange={(event) => setContent({ ...content, education: { ...content.education, degree: event.target.value } })} required /></label><label>School<input value={content.education.school} onChange={(event) => setContent({ ...content, education: { ...content.education, school: event.target.value } })} required /></label><div className="field-pair"><label>Expected graduation<input value={content.education.graduation} onChange={(event) => setContent({ ...content, education: { ...content.education, graduation: event.target.value } })} required /></label><label>GPA<input value={content.education.gpa} onChange={(event) => setContent({ ...content, education: { ...content.education, gpa: event.target.value } })} required /></label></div></div>
 

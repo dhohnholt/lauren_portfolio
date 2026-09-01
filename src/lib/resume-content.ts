@@ -87,7 +87,7 @@ export function normalizeResumeContent(value: unknown): ResumeContent {
     sectionTitles: { ...DEFAULT_RESUME_CONTENT.sectionTitles, ...candidate.sectionTitles },
     experience: Array.isArray(candidate.experience) && candidate.experience.length ? candidate.experience : DEFAULT_RESUME_CONTENT.experience,
     leadership: { ...DEFAULT_RESUME_CONTENT.leadership, ...candidate.leadership },
-    projects: Array.isArray(candidate.projects) && candidate.projects.length ? candidate.projects : DEFAULT_RESUME_CONTENT.projects,
+    projects: Array.isArray(candidate.projects) ? candidate.projects : DEFAULT_RESUME_CONTENT.projects,
     education: { ...DEFAULT_RESUME_CONTENT.education, ...candidate.education },
     skills: { ...DEFAULT_RESUME_CONTENT.skills, ...candidate.skills },
     contact: { ...DEFAULT_RESUME_CONTENT.contact, ...candidate.contact },
