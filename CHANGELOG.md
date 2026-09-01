@@ -29,3 +29,4 @@
 - Connected the Contact form to Supabase and added a private Messages inbox with email-reply actions to the admin studio.
 - Automatically convert public Canva view links to Canva's iframe-compatible embed format in the project viewer.
 - Added an accessible in-site fullscreen lightbox for project presentations with Escape and backdrop dismissal.
+- Replaced the default favicon with Lauren's circular monogram, including transparent browser and Apple touch icon sizes.
