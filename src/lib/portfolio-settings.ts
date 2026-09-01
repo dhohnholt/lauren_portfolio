@@ -36,7 +36,7 @@ export const DEFAULT_PORTFOLIO_SETTINGS: PortfolioSettings = {
     "Lauren's résumé, education, and experience will live here as her portfolio grows. The structure is ready for real milestones, roles, and accomplishments.",
   experience_link_label: "View résumé",
   footer_tagline:
-    "let's build something great...or goood, as long as I learn along the way.",
+    "let's build something great...or good, as long as I learn along the way.",
   color_olive: "#6a713e",
   color_berry: "#47122f",
   color_sand: "#a18a7b",
