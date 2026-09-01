@@ -36,5 +36,6 @@
 - Improved contact notification diagnostics so tests report whether a message was saved, whether Resend accepted the email, and the accepted email ID; the contact form no longer claims an email was sent when delivery could not be confirmed.
 - Repaired headshot framing saves by seeding any missing settings and saving all image controls through one guarded bulk upsert.
 - Restored update-only RLS for headshot settings and removed the upsert path that caused insert-policy failures during admin saves.
+- Added a self-contained reconciliation migration that seeds every headshot setting and restores complete read/update policies after partially applied framing migrations.
 - Replaced the résumé placeholder with Lauren's education, engineering projects, technical skills, IEEE leadership, work history, and audio experience.
 - Removed the decorative portrait label and added saved left-right positioning to the headshot framing controls.

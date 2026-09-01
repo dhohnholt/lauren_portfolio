@@ -47,6 +47,8 @@ Run `20260901024728_repair_headshot_settings_save.sql` to repair any missing hea
 
 Run `20260901025200_restore_site_settings_update_only.sql` after the repair migration. The admin editor now updates the seeded framing rows without requiring browser-side insert access.
 
+Run `20260901031330_enforce_complete_headshot_settings_policies.sql` to reconcile databases where earlier framing migrations were only partially applied. This migration is self-contained: it seeds all four settings and recreates their complete public-read/admin-update RLS policies.
+
 ## Contact email notifications
 
 The Contact form calls the `notify-contact` Supabase Edge Function. The function validates and saves each message to the private admin inbox, then sends a branded notification to `laurenhohnholt@gmail.com` through Resend.
