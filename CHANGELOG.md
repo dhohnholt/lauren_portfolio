@@ -23,3 +23,4 @@
 - Configured the password-recovery documentation for `laurenhohnholt.com`.
 - Rebalanced the public page palette so plum is an accent, adding charcoal, sage, moss, and cream tones for clearer section contrast and smoother visual progression.
 - Strengthened the main project viewer drop shadow to separate it visually from the side previews.
+- Restored the berry Projects section while retaining the new olive experience treatment and charcoal footer.
