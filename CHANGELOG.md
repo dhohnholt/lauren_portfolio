@@ -57,3 +57,4 @@
 - Deferred Canva until visitors explicitly load a presentation and routed the headshot and project previews through Next.js image resizing and modern-format delivery.
 - Expanded the résumé leadership section to support multiple editable entries and added Lauren's informal role bringing friends together through college-break tea parties and a Glenwood Catwalk camping trip.
 - Updated the footer tagline to Lauren's playful learning-focused message.
+- Corrected the footer migration to update the single-row portfolio settings table.
