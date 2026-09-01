@@ -13,6 +13,17 @@ const fallbackProjects: Project[] = [
   { id: 4, title: "Project Four", category: "Creative exploration", summary: "A final showcase slot for an experiment, passion project, or collaborative piece.", canva_url: null, thumbnail_url: null },
 ];
 
+function presentationEmbedUrl(value: string) {
+  try {
+    const url = new URL(value);
+    const isCanvaView = (url.hostname === "canva.com" || url.hostname === "www.canva.com") && url.pathname.endsWith("/view");
+
+    return isCanvaView ? `${url.origin}${url.pathname}?embed` : value;
+  } catch {
+    return value;
+  }
+}
+
 export function ProjectViewer() {
   const [projects, setProjects] = useState(fallbackProjects);
   const [active, setActive] = useState(0);
@@ -21,6 +32,7 @@ export function ProjectViewer() {
   const nextIndex = (active + 1) % projects.length;
   const previous = projects[previousIndex];
   const next = projects[nextIndex];
+  const embedUrl = project.canva_url ? presentationEmbedUrl(project.canva_url) : null;
 
   useEffect(() => {
     if (!supabase) return;
@@ -44,7 +56,7 @@ export function ProjectViewer() {
 
       <article className="viewer-panel" aria-live="polite">
         <div className="viewer-topline"><span>{String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span><span>{project.category}</span></div>
-        {project.canva_url ? <iframe key={project.id} className="presentation-frame" src={project.canva_url} title={`${project.title} presentation`} loading="lazy" allow="fullscreen" allowFullScreen /> : <div className="viewer-empty"><p className="eyebrow">Featured project</p><h3>{project.title}</h3><p>{project.summary}</p></div>}
+        {embedUrl ? <iframe key={project.id} className="presentation-frame" src={embedUrl} title={`${project.title} presentation`} loading="lazy" allow="fullscreen" allowFullScreen /> : <div className="viewer-empty"><p className="eyebrow">Featured project</p><h3>{project.title}</h3><p>{project.summary}</p></div>}
         <div className="viewer-footer"><div><strong>{project.title}</strong><span>{project.canva_url ? "Embedded presentation" : "Presentation coming soon"}</span></div>{project.canva_url && <a href={project.canva_url} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} presentation in a new tab`}><span className="arrow" aria-hidden="true">↗</span></a>}</div>
       </article>
 

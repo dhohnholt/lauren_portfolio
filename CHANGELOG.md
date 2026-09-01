@@ -24,3 +24,7 @@
 - Rebalanced the public page palette so plum is an accent, adding charcoal, sage, moss, and cream tones for clearer section contrast and smoother visual progression.
 - Strengthened the main project viewer drop shadow to separate it visually from the side previews.
 - Restored the berry Projects section while retaining the new olive experience treatment and charcoal footer.
+- Updated the navigation banner to olive `#6a713e` with white navigation text and controls.
+- Reframed the Contact page copy around internship opportunities and recruiter outreach.
+- Connected the Contact form to Supabase and added a private Messages inbox with email-reply actions to the admin studio.
+- Automatically convert public Canva view links to Canva's iframe-compatible embed format in the project viewer.
