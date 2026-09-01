@@ -83,7 +83,8 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
 .carousel-dots button.is-active { width:52px; background:var(--sage); }
 .arrow { font-size:2rem; line-height:1; }
 .experience-section { background:linear-gradient(135deg,var(--olive),var(--moss)); color:var(--white); padding-block:108px; position:relative; overflow:hidden; }
-.experience-section::after { content:""; position:absolute; width:420px; aspect-ratio:1; border:1px solid rgba(255,255,255,.14); border-radius:50%; right:-160px; bottom:-250px; box-shadow:0 0 0 70px rgba(255,255,255,.035),0 0 0 140px rgba(255,255,255,.025); pointer-events:none; }
+.experience-section::before { content:""; position:absolute; inset:0; background:url("/images/circuit-board-overlay.png") center/cover no-repeat; opacity:.11; mix-blend-mode:luminosity; pointer-events:none; }
+.experience-section .section-shell { position:relative; z-index:1; }
 .experience-grid { display:grid; grid-template-columns:1fr 1fr; gap:10vw; }
 .experience-grid h2 { font-size:clamp(3rem,6vw,6rem); margin:0; }
 .experience-copy { font-size:1.15rem; line-height:1.65; padding:34px; background:rgba(255,253,250,.1); border:1px solid rgba(255,255,255,.18); backdrop-filter:blur(8px); position:relative; z-index:1; }
