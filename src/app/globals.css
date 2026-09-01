@@ -97,8 +97,9 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
 .page-intro > p:last-child { max-width:680px; font-size:1.1rem; line-height:1.6; }
 .light-heading { color:var(--white); }
 .narrow-shell { max-width:980px; }
-.resume-page { background:var(--mist); }
+.resume-page { background:var(--sand); }
 .resume-shell { max-width:1220px; }
+.resume-page h1,.resume-page h2,.resume-page h3 { color:var(--berry); }
 .resume-intro { display:grid; grid-template-columns:1fr 1.12fr; gap:8vw; align-items:end; padding-bottom:58px; border-bottom:1px solid var(--ink); }
 .resume-intro h1 { max-width:620px; margin:0; font-size:clamp(3.7rem,7vw,7rem); }
 .resume-intro > p { margin:0; max-width:650px; font-size:1.08rem; line-height:1.7; color:color-mix(in srgb,var(--ink) 76%,transparent); }
@@ -182,6 +183,8 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
 .field-section { display:grid; gap:20px; padding:28px 0; border-bottom:1px solid var(--line); }
 .field-section h3 { margin:0; font-size:1.4rem; letter-spacing:-.02em; }
 .field-pair { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.resume-admin-entry { display:grid; gap:18px; padding:22px; border:1px solid var(--line); }
+.resume-admin-entry legend { padding:0 9px; color:var(--berry); font-family:Georgia,"Times New Roman",serif; font-size:1.05rem; font-weight:700; }
 .admin-form textarea { width:100%; border:1px solid var(--line); background:var(--white); padding:13px; outline:none; resize:vertical; text-transform:none; letter-spacing:0; line-height:1.5; }
 .admin-form textarea:focus { border-color:var(--berry); box-shadow:0 0 0 2px color-mix(in srgb,var(--berry) 18%,transparent); }
 .color-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; padding:20px 0 8px; }

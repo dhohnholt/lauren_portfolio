@@ -12,9 +12,9 @@ A responsive portfolio website built with Next.js, TypeScript, and Supabase.
 
 - `/` — About, selected projects, and experience overview
 - `/projects` — Interactive four-project viewer
-- `/resume` — Résumé placeholder structure
+- `/resume` — Public résumé populated from Lauren's editable content
 - `/contact` — Contact form prepared for a future Supabase table
-- `/admin` — Authenticated portfolio studio for homepage copy, brand colors, headshot, project copy, presentations, preview images, and private contact messages
+- `/admin` — Authenticated portfolio studio for homepage and résumé copy, brand colors, headshot, project media, and private contact messages
 - `/admin/reset-password` — Supabase password-recovery destination for the admin account
 
 Netlify can deploy this repository as a standard Next.js application. Add both `NEXT_PUBLIC_SUPABASE_*` variables in the Netlify environment settings.
@@ -48,6 +48,8 @@ Run `20260901024728_repair_headshot_settings_save.sql` to repair any missing hea
 Run `20260901025200_restore_site_settings_update_only.sql` after the repair migration. The admin editor now updates the seeded framing rows without requiring browser-side insert access.
 
 Run `20260901031330_enforce_complete_headshot_settings_policies.sql` to reconcile databases where earlier framing migrations were only partially applied. This migration is self-contained: it seeds all four settings and recreates their complete public-read/admin-update RLS policies.
+
+Run `20260901033015_add_editable_resume_content.sql` to add the public-read/admin-update résumé document. Afterward, Lauren can edit the résumé from the Résumé tab in `/admin`.
 
 ## Contact email notifications
 
