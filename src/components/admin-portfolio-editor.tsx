@@ -60,6 +60,15 @@ export function AdminPortfolioEditor() {
     setMessage(error ? error.message : "Signed in."); setBusy(false);
   }
 
+  async function sendPasswordReset() {
+    if (!supabase) return;
+    if (!email.trim()) { setMessage("Enter Lauren's email address first."); return; }
+    setBusy(true); setMessage("");
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: `${window.location.origin}/admin/reset-password` });
+    setMessage(error ? error.message : "If that account exists, a password-reset email is on its way.");
+    setBusy(false);
+  }
+
   async function saveContent(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!supabase || !user) return;
@@ -99,7 +108,7 @@ export function AdminPortfolioEditor() {
   function updateSetting<K extends keyof PortfolioSettings>(field: K, value: PortfolioSettings[K]) { setSettings((current) => ({ ...current, [field]: value })); }
   function updateProject(index: number, values: Partial<AdminProject>) { setProjects((current) => current.map((project, itemIndex) => itemIndex === index ? { ...project, ...values } : project)); }
 
-  if (!user) return <form className="admin-card admin-form admin-login" onSubmit={signIn}><p className="eyebrow">Secure access</p><h2>Admin sign in</h2><label>Email<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" /></label><label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required autoComplete="current-password" /></label><button className="button button-primary" disabled={busy} type="submit">{busy ? "Signing in…" : "Sign in"}</button><p className="form-message" role="status">{message}</p></form>;
+  if (!user) return <form className="admin-card admin-form admin-login" onSubmit={signIn}><p className="eyebrow">Secure access</p><h2>Admin sign in</h2><label>Email<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoComplete="email" /></label><label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required autoComplete="current-password" /></label><div className="login-actions"><button className="button button-primary" disabled={busy} type="submit">{busy ? "Please wait…" : "Sign in"}</button><button className="text-button" disabled={busy} type="button" onClick={sendPasswordReset}>Forgot password?</button></div><p className="form-message" role="status">{message}</p></form>;
 
   return (
     <div className="admin-studio">

@@ -19,3 +19,5 @@
 - Added editable homepage copy, live-preview brand colors, headshot management, and full project copy/media controls.
 - Added a public, RLS-protected portfolio settings record with admin-only updates.
 - Reworked the project viewer into a Netflix-style three-card carousel with one preview on each side, black gradient falloff, keyboard navigation, and project position controls.
+- Added a complete admin password-recovery flow with reset-email requests, secure recovery-session handling, password confirmation, and a dedicated reset route.
+- Configured the password-recovery documentation for `laurenhohnholt.com`.

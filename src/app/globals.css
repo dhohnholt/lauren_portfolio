@@ -99,6 +99,10 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
 .admin-page .page-intro h1 { font-size:clamp(3rem,5vw,5.5rem); }
 .admin-card { background:var(--paper); padding:32px; box-shadow:18px 18px 0 var(--olive); }
 .admin-login { max-width:560px; }
+.login-actions { display:flex; align-items:center; flex-wrap:wrap; gap:18px; }
+.reset-layout { display:grid; grid-template-columns:.9fr 1.1fr; gap:9vw; align-items:start; }
+.reset-card { width:100%; max-width:580px; }
+.reset-card > p:not(.eyebrow):not(.form-message) { line-height:1.6; margin-bottom:26px; }
 .admin-card h2 { font-size:2.1rem; margin-bottom:24px; }
 .admin-card-header { display:flex; align-items:start; justify-content:space-between; gap:20px; }
 .admin-preview { aspect-ratio:16/10; overflow:hidden; background:var(--sand); margin-bottom:28px; }
@@ -155,7 +159,7 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
   .site-header nav a:first-child { display:none; }
   .hero { grid-template-columns:1fr; min-height:auto; gap:64px; }
   .portrait-mark { width:min(320px,82vw); justify-self:center; }
-  .experience-grid,.resume-grid,.contact-grid,.admin-grid { grid-template-columns:1fr; }
+  .experience-grid,.resume-grid,.contact-grid,.admin-grid,.reset-layout { grid-template-columns:1fr; }
   .admin-page .page-intro { position:static; margin-bottom:8px; }
   .project-editor-grid { grid-template-columns:1fr; }
   .project-image-preview { min-height:280px; }

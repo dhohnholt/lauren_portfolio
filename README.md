@@ -15,6 +15,7 @@ A responsive portfolio website built with Next.js, TypeScript, and Supabase.
 - `/resume` — Résumé placeholder structure
 - `/contact` — Contact form prepared for a future Supabase table
 - `/admin` — Authenticated portfolio studio for homepage copy, brand colors, headshot, project copy, presentations, and preview images
+- `/admin/reset-password` — Supabase password-recovery destination for the admin account
 
 Netlify can deploy this repository as a standard Next.js application. Add both `NEXT_PUBLIC_SUPABASE_*` variables in the Netlify environment settings.
 
@@ -35,3 +36,5 @@ The separate `20260901010422_grant_lauren_admin_access.sql` migration runs this 
 Run `20260901010801_allow_admin_project_updates.sql` after the admin allowlist migration to let Lauren update each project's Canva presentation URL from the admin page. Then run `20260901011057_allow_admin_project_preview_updates.sql` to enable the paired preview-image URL for each project.
 
 Run `20260901011842_add_portfolio_content_and_theme.sql` last to enable editable homepage copy, live theme colors, and project titles, categories, and summaries.
+
+For password recovery, set the Supabase Site URL to `https://laurenhohnholt.com` and add `https://laurenhohnholt.com/admin/reset-password` under Authentication → URL Configuration → Redirect URLs. The “Forgot password?” action on `/admin` sends the recovery email to this route.
