@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a Google Search Console-compatible sitemap for all public portfolio pages.
 - Initialized Lauren Hohnholt's Next.js portfolio.
 - Added responsive About, Projects, Résumé, and Contact pages.
 - Added an interactive four-project viewer prepared for Canva embeds.
