@@ -23,6 +23,7 @@ button,input,textarea { font:inherit; }
 h1,h2,h3,p { margin-top:0; }
 h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; line-height:.96; }
 .hero h1,.page-intro h1 { font-size:clamp(3.7rem,8vw,7rem); margin-bottom:26px; }
+.hero h1 { color:var(--berry); }
 .lede { max-width:640px; font-size:clamp(1.08rem,2vw,1.28rem); line-height:1.65; color:color-mix(in srgb,var(--ink) 76%,transparent); }
 .button-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
 .button { min-height:48px; display:inline-flex; align-items:center; justify-content:center; padding:12px 21px; border-radius:999px; border:1px solid transparent; font-weight:750; cursor:pointer; transition:transform .2s ease,background .2s ease; }

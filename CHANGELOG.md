@@ -48,3 +48,5 @@
 - Changed the résumé background to paper, removed the small green section labels that displaced headings, and made the three main résumé section titles editable from the admin workspace.
 - Refined the résumé sidebar with a berry background, olive framing accents, and high-contrast white, cream, and light-olive typography.
 - Added admin controls for creating portfolio projects with copy, Canva presentation, and preview-image fields, plus flexible add/remove controls for projects shown on the résumé.
+- Added an authenticated-only `Command + L + H` held-key shortcut for opening the admin studio, with key-state cleanup when the browser loses focus.
+- Changed the homepage name title to the berry brand color.
