@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Hardened the Supabase database with least-privilege API grants, indexed foreign keys, and consolidated project read policies.
+- Restored automatic loading for the active Canva presentation so visitors can interact with it without an extra click.
 - Added a Google Search Console-compatible sitemap for all public portfolio pages.
 - Initialized Lauren Hohnholt's Next.js portfolio.
 - Added responsive About, Projects, Résumé, and Contact pages.

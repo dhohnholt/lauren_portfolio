@@ -30,7 +30,6 @@ export function ProjectViewer() {
   const [projects, setProjects] = useState(fallbackProjects);
   const [active, setActive] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [requestedPresentationId, setRequestedPresentationId] = useState<number | null>(null);
   const [loadedPresentationId, setLoadedPresentationId] = useState<number | null>(null);
   const project = projects[active] ?? projects[0];
   const previousIndex = (active - 1 + projects.length) % projects.length;
@@ -38,7 +37,6 @@ export function ProjectViewer() {
   const previous = projects[previousIndex];
   const next = projects[nextIndex];
   const embedUrl = project.canva_url ? presentationEmbedUrl(project.canva_url) : null;
-  const isPresentationRequested = requestedPresentationId === project.id;
   const isPresentationLoaded = loadedPresentationId === project.id;
 
   useEffect(() => {
@@ -80,17 +78,12 @@ export function ProjectViewer() {
       <article className="viewer-panel" aria-live="polite">
         <div className="viewer-topline"><span>{String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span><span>{project.category}</span></div>
         {embedUrl ? <div className={`presentation-stage${isPresentationLoaded ? " is-loaded" : ""}`}>
-          {!isPresentationRequested ? <button className="presentation-cover" type="button" onClick={() => setRequestedPresentationId(project.id)} aria-label={`Load ${project.title} presentation`}>
-            {project.thumbnail_url && (canOptimizeImage(project.thumbnail_url) ? <Image src={project.thumbnail_url} alt="" fill sizes="(max-width: 520px) calc(100vw - 68px), 60vw" quality={72} /> : <img src={project.thumbnail_url} alt="" loading="lazy" decoding="async" />)}
-            <span className="presentation-cover-copy"><span className="placeholder-mark" aria-hidden="true">✦</span><blockquote>Making is where curiosity becomes something real.</blockquote><strong>Load presentation</strong></span>
-          </button> : <>
-            <div className="presentation-placeholder" role="status" aria-hidden={isPresentationLoaded}>
-              <span className="placeholder-mark" aria-hidden="true">✦</span>
-              <blockquote>Making is where curiosity becomes something real.</blockquote>
-              <small>Loading {project.title}</small>
-            </div>
-            <iframe key={project.id} className="presentation-frame" src={embedUrl} title={`${project.title} presentation`} allow="fullscreen" allowFullScreen onLoad={() => setLoadedPresentationId(project.id)} />
-          </>}
+          <div className="presentation-placeholder" role="status" aria-hidden={isPresentationLoaded}>
+            <span className="placeholder-mark" aria-hidden="true">✦</span>
+            <blockquote>Making is where curiosity becomes something real.</blockquote>
+            <small>Loading {project.title}</small>
+          </div>
+          <iframe key={project.id} className="presentation-frame" src={embedUrl} title={`${project.title} presentation`} allow="fullscreen" allowFullScreen onLoad={() => setLoadedPresentationId(project.id)} />
         </div> : <div className="viewer-empty"><p className="eyebrow">Featured project</p><h3>{project.title}</h3><p>{project.summary}</p></div>}
         <div className="viewer-footer"><div><strong>{project.title}</strong><span>{project.canva_url ? "Embedded presentation" : "Presentation coming soon"}</span></div>{embedUrl && <button className="lightbox-open" type="button" onClick={() => setIsLightboxOpen(true)} aria-label={`View ${project.title} fullscreen`}><span aria-hidden="true">⛶</span><small>Fullscreen</small></button>}</div>
       </article>
