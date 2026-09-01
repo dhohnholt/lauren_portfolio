@@ -15,6 +15,7 @@ export type ResumeContent = {
   eyebrow: string;
   title: string;
   summary: string;
+  sectionTitles: { experience: string; leadership: string; projects: string };
   experience: ResumeExperience[];
   leadership: ResumeExperience;
   projects: ResumeProject[];
@@ -27,6 +28,7 @@ export const DEFAULT_RESUME_CONTENT: ResumeContent = {
   eyebrow: "Résumé",
   title: "Engineering with a creative signal.",
   summary: "Senior Electrical Engineering student and IEEE officer with 2+ years of workplace experience, blending analytical engineering fundamentals with creative problem solving. Passionate musician with skills in circuit design, hardware assembly, and troubleshooting through independent audio electronics projects, including building custom guitar effects pedals.",
+  sectionTitles: { experience: "Work & audio", leadership: "Student organizations", projects: "Academic projects" },
   experience: [
     {
       title: "Sales Associate",
@@ -82,6 +84,7 @@ export function normalizeResumeContent(value: unknown): ResumeContent {
   return {
     ...DEFAULT_RESUME_CONTENT,
     ...candidate,
+    sectionTitles: { ...DEFAULT_RESUME_CONTENT.sectionTitles, ...candidate.sectionTitles },
     experience: Array.isArray(candidate.experience) && candidate.experience.length ? candidate.experience : DEFAULT_RESUME_CONTENT.experience,
     leadership: { ...DEFAULT_RESUME_CONTENT.leadership, ...candidate.leadership },
     projects: Array.isArray(candidate.projects) && candidate.projects.length ? candidate.projects : DEFAULT_RESUME_CONTENT.projects,

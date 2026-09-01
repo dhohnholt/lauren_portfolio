@@ -28,17 +28,17 @@ export function ResumeContent() {
       <div className="resume-layout">
         <div className="resume-main">
           <section className="resume-section">
-            <div className="resume-section-heading"><p className="eyebrow">Experience</p><h2>Work & audio</h2></div>
+            <div className="resume-section-heading"><h2>{content.sectionTitles.experience}</h2></div>
             {content.experience.map((entry, index) => <article className="resume-entry" key={`${index}-${entry.title}`}><div className="resume-entry-heading"><div><h3>{entry.title}</h3><p>{entry.organization}</p></div><time>{entry.date}</time></div><BulletList items={entry.bullets} /></article>)}
           </section>
 
           <section className="resume-section">
-            <div className="resume-section-heading"><p className="eyebrow">Leadership</p><h2>Student organizations</h2></div>
+            <div className="resume-section-heading"><h2>{content.sectionTitles.leadership}</h2></div>
             <article className="resume-entry"><div className="resume-entry-heading"><div><h3>{content.leadership.title}</h3><p>{content.leadership.organization}</p></div>{content.leadership.date && <time>{content.leadership.date}</time>}</div><BulletList items={content.leadership.bullets} /></article>
           </section>
 
           <section className="resume-section">
-            <div className="resume-section-heading"><p className="eyebrow">Selected work</p><h2>Academic projects</h2></div>
+            <div className="resume-section-heading"><h2>{content.sectionTitles.projects}</h2></div>
             {content.projects.map((project, index) => <article className="resume-entry project-resume-entry" key={`${index}-${project.title}`}><div className="resume-entry-heading"><h3>{project.title}</h3><time>{project.date}</time></div><p>{project.description}</p></article>)}
           </section>
         </div>

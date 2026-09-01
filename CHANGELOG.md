@@ -43,3 +43,6 @@
 - Added an RLS-protected editable résumé document, a dedicated admin résumé workspace, and live public résumé content with built-in defaults.
 - Replaced the résumé placeholder with Lauren's education, engineering projects, technical skills, IEEE leadership, work history, and audio experience.
 - Removed the decorative portrait label and added saved left-right positioning to the headshot framing controls.
+- Polished the portfolio for mobile visitors with a full-width touch-friendly project viewer, larger controls, phone-safe forms and typography, and a more compact, horizontally scrollable admin workspace.
+- Added a branded olive presentation-loading placeholder with an on-theme creative quote and a smooth fade into each loaded Canva project.
+- Changed the résumé background to paper, removed the small green section labels that displaced headings, and made the three main résumé section titles editable from the admin workspace.
