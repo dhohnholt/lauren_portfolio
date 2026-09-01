@@ -58,3 +58,4 @@
 - Expanded the résumé leadership section to support multiple editable entries and added Lauren's informal role bringing friends together through college-break tea parties and a Glenwood Catwalk camping trip.
 - Updated the footer tagline to Lauren's playful learning-focused message.
 - Corrected the footer migration to update the single-row portfolio settings table.
+- Added a custom 1200×630 social-sharing image with Open Graph and large-card metadata.
