@@ -27,6 +27,7 @@ function presentationEmbedUrl(value: string) {
 export function ProjectViewer() {
   const [projects, setProjects] = useState(fallbackProjects);
   const [active, setActive] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const project = projects[active] ?? projects[0];
   const previousIndex = (active - 1 + projects.length) % projects.length;
   const nextIndex = (active + 1) % projects.length;
@@ -40,6 +41,22 @@ export function ProjectViewer() {
       if (data?.length) { setProjects(data); setActive(0); }
     });
   }, []);
+
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") setIsLightboxOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isLightboxOpen]);
 
   function handleKeys(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key === "ArrowLeft") { event.preventDefault(); setActive(previousIndex); }
@@ -57,7 +74,7 @@ export function ProjectViewer() {
       <article className="viewer-panel" aria-live="polite">
         <div className="viewer-topline"><span>{String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span><span>{project.category}</span></div>
         {embedUrl ? <iframe key={project.id} className="presentation-frame" src={embedUrl} title={`${project.title} presentation`} loading="lazy" allow="fullscreen" allowFullScreen /> : <div className="viewer-empty"><p className="eyebrow">Featured project</p><h3>{project.title}</h3><p>{project.summary}</p></div>}
-        <div className="viewer-footer"><div><strong>{project.title}</strong><span>{project.canva_url ? "Embedded presentation" : "Presentation coming soon"}</span></div>{project.canva_url && <a href={project.canva_url} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} presentation in a new tab`}><span className="arrow" aria-hidden="true">↗</span></a>}</div>
+        <div className="viewer-footer"><div><strong>{project.title}</strong><span>{project.canva_url ? "Embedded presentation" : "Presentation coming soon"}</span></div>{embedUrl && <button className="lightbox-open" type="button" onClick={() => setIsLightboxOpen(true)} aria-label={`View ${project.title} fullscreen`}><span aria-hidden="true">⛶</span><small>Fullscreen</small></button>}</div>
       </article>
 
       <button className="side-preview is-right" type="button" onClick={() => setActive(nextIndex)} aria-label={`Show next project: ${next.title}`}>
@@ -69,6 +86,13 @@ export function ProjectViewer() {
       <div className="carousel-dots" aria-label="Choose a project">
         {projects.map((item, index) => <button key={item.id} className={index === active ? "is-active" : ""} type="button" onClick={() => setActive(index)} aria-label={`Show ${item.title}`} aria-current={index === active ? "true" : undefined} />)}
       </div>
+
+      {isLightboxOpen && embedUrl && <div className="presentation-lightbox" role="dialog" aria-modal="true" aria-label={`${project.title} fullscreen presentation`} onMouseDown={(event) => { if (event.target === event.currentTarget) setIsLightboxOpen(false); }}>
+        <div className="lightbox-shell">
+          <div className="lightbox-header"><div><small>{project.category}</small><strong>{project.title}</strong></div><button type="button" autoFocus onClick={() => setIsLightboxOpen(false)} aria-label="Close fullscreen presentation"><span aria-hidden="true">×</span><small>Close</small></button></div>
+          <iframe className="lightbox-frame" src={embedUrl} title={`${project.title} fullscreen presentation`} allow="fullscreen" allowFullScreen />
+        </div>
+      </div>}
     </div>
   );
 }
