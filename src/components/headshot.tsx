@@ -1,10 +1,12 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import { canOptimizeImage } from "@/lib/image-hosts";
 import { publicRestGet } from "@/lib/supabase/public-client";
 
-export const DEFAULT_HEADSHOT_URL = "https://images.unsplash.com/photo-1699899657680-421c2c2d5064?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+export const DEFAULT_HEADSHOT_URL = "https://i.postimg.cc/vBgbXmzW/Ruidoso-05.jpg";
 
 export function Headshot() {
   const [url, setUrl] = useState(DEFAULT_HEADSHOT_URL);
@@ -29,14 +31,16 @@ export function Headshot() {
 
   return (
     <span className="headshot-crop">
-      <img
+      {canOptimizeImage(url) ? <Image
         className="headshot-image"
         src={url}
         alt="Lauren Hohnholt"
-        fetchPriority="high"
+        fill
+        sizes="(max-width: 800px) 82vw, 390px"
+        quality={78}
         style={{ transform: `translate(${shiftX}%, ${shiftY}%) scale(${zoom / 100})` }}
         onError={() => setFailed(true)}
-      />
+      /> : <img className="headshot-image" src={url} alt="Lauren Hohnholt" fetchPriority="high" style={{ transform: `translate(${shiftX}%, ${shiftY}%) scale(${zoom / 100})` }} onError={() => setFailed(true)} />}
     </span>
   );
 }

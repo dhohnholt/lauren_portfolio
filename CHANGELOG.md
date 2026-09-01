@@ -54,3 +54,4 @@
 - Restyled the Contact page with a paper background, olive form panel, berry framing, and high-contrast cream and white field typography.
 - Replaced the Contact form's berry framing and button accents with warm sand and deep-ink button text.
 - Reduced the circuit-board overlay from a 1.3 MB PNG to an 84 KB WebP and consolidated shared public settings into one lightweight REST request, removing redundant Supabase SDK work from normal page loads.
+- Deferred Canva until visitors explicitly load a presentation and routed the headshot and project previews through Next.js image resizing and modern-format delivery.
