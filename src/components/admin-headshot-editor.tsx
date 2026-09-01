@@ -6,12 +6,22 @@ import type { User } from "@supabase/supabase-js";
 import { DEFAULT_HEADSHOT_URL } from "@/components/headshot";
 import { supabase } from "@/lib/supabase/client";
 
+type AdminProject = {
+  id: number;
+  title: string;
+  canva_url: string | null;
+  thumbnail_url: string | null;
+  sort_order: number;
+};
+
 export function AdminHeadshotEditor() {
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [url, setUrl] = useState(DEFAULT_HEADSHOT_URL);
+  const [projects, setProjects] = useState<AdminProject[]>([]);
   const [message, setMessage] = useState(supabase ? "Checking your session…" : "Supabase environment variables are not configured.");
+  const [projectMessage, setProjectMessage] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -36,6 +46,10 @@ export function AdminHeadshotEditor() {
     void supabase.from("site_settings").select("value").eq("key", "headshot_url").single().then(({ data, error }) => {
       if (data?.value) setUrl(data.value);
       if (error) setMessage(error.message);
+    });
+    void supabase.from("projects").select("id, title, canva_url, thumbnail_url, sort_order").order("sort_order").then(({ data, error }) => {
+      if (data) setProjects(data);
+      if (error) setProjectMessage(error.message);
     });
   }, [user]);
 
@@ -73,6 +87,49 @@ export function AdminHeadshotEditor() {
     setBusy(false);
   }
 
+  async function saveProjectUrls(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!supabase || !user) return;
+
+    for (const project of projects) {
+      const urls = [
+        { label: "presentation", value: project.canva_url?.trim() ?? "" },
+        { label: "preview image", value: project.thumbnail_url?.trim() ?? "" },
+      ];
+      for (const field of urls) {
+        if (!field.value) continue;
+        try {
+          const parsed = new URL(field.value);
+          if (parsed.protocol !== "https:") throw new Error();
+        } catch {
+          setProjectMessage(`${project.title} needs a complete HTTPS ${field.label} URL.`);
+          return;
+        }
+      }
+    }
+
+    setBusy(true);
+    setProjectMessage("");
+
+    for (const project of projects) {
+      const { error } = await supabase
+        .from("projects")
+        .update({ canva_url: project.canva_url?.trim() || null, thumbnail_url: project.thumbnail_url?.trim() || null, updated_at: new Date().toISOString() })
+        .eq("id", project.id)
+        .select("id")
+        .single();
+
+      if (error) {
+        setProjectMessage(error.message);
+        setBusy(false);
+        return;
+      }
+    }
+
+    setProjectMessage("Presentation URLs updated.");
+    setBusy(false);
+  }
+
   if (!user) {
     return (
       <form className="admin-card admin-form" onSubmit={signIn}>
@@ -86,14 +143,30 @@ export function AdminHeadshotEditor() {
   }
 
   return (
-    <div className="admin-card">
-      <div className="admin-card-header"><div><p className="eyebrow">Signed in</p><h2>Update headshot</h2></div><button className="text-button" type="button" onClick={() => supabase?.auth.signOut()}>Sign out</button></div>
-      <div className="admin-preview"><img src={url || DEFAULT_HEADSHOT_URL} alt="Current headshot preview" /></div>
-      <form className="admin-form" onSubmit={save}>
-        <label>Headshot image URL<input type="url" value={url} onChange={(event) => setUrl(event.target.value)} required /></label>
-        <button className="button button-primary" disabled={busy} type="submit">{busy ? "Saving…" : "Save headshot"}</button>
-        <p className="form-message" role="status">{message}</p>
-      </form>
+    <div className="admin-stack">
+      <div className="admin-card">
+        <div className="admin-card-header"><div><p className="eyebrow">Signed in</p><h2>Update headshot</h2></div><button className="text-button" type="button" onClick={() => supabase?.auth.signOut()}>Sign out</button></div>
+        <div className="admin-preview"><img src={url || DEFAULT_HEADSHOT_URL} alt="Current headshot preview" /></div>
+        <form className="admin-form" onSubmit={save}>
+          <label>Headshot image URL<input type="url" value={url} onChange={(event) => setUrl(event.target.value)} required /></label>
+          <button className="button button-primary" disabled={busy} type="submit">{busy ? "Saving…" : "Save headshot"}</button>
+          <p className="form-message" role="status">{message}</p>
+        </form>
+      </div>
+      <div className="admin-card">
+        <div className="admin-card-header"><div><p className="eyebrow">Projects</p><h2>Presentation URLs</h2></div></div>
+        <form className="admin-form" onSubmit={saveProjectUrls}>
+          {projects.map((project, index) => (
+            <fieldset className="project-url-group" key={project.id}>
+              <legend>{project.title}</legend>
+              <label>Presentation URL<input type="url" inputMode="url" placeholder="https://www.canva.com/design/..." value={project.canva_url ?? ""} onChange={(event) => setProjects((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, canva_url: event.target.value } : item))} /></label>
+              <label>Preview image URL<input type="url" inputMode="url" placeholder="https://images.example.com/project-preview.jpg" value={project.thumbnail_url ?? ""} onChange={(event) => setProjects((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, thumbnail_url: event.target.value } : item))} /></label>
+            </fieldset>
+          ))}
+          <button className="button button-primary" disabled={busy || projects.length === 0} type="submit">{busy ? "Saving…" : "Save presentation URLs"}</button>
+          <p className="form-message" role="status">{projectMessage}</p>
+        </form>
+      </div>
     </div>
   );
 }

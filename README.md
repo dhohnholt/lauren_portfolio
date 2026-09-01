@@ -14,7 +14,7 @@ A responsive portfolio website built with Next.js, TypeScript, and Supabase.
 - `/projects` — Interactive four-project viewer
 - `/resume` — Résumé placeholder structure
 - `/contact` — Contact form prepared for a future Supabase table
-- `/admin` — Authenticated headshot URL editor
+- `/admin` — Authenticated headshot and project presentation URL editor
 
 Netlify can deploy this repository as a standard Next.js application. Add both `NEXT_PUBLIC_SUPABASE_*` variables in the Netlify environment settings.
 
@@ -31,3 +31,5 @@ on conflict (user_id) do nothing;
 ```
 
 The separate `20260901010422_grant_lauren_admin_access.sql` migration runs this allowlist statement. Lauren's Auth account must exist before it runs. If the account is created afterward, run the statement manually once. Only listed admin users can save changes from `/admin`.
+
+Run `20260901010801_allow_admin_project_updates.sql` after the admin allowlist migration to let Lauren update each project's Canva presentation URL from the admin page. Then run `20260901011057_allow_admin_project_preview_updates.sql` to enable the paired preview-image URL for each project.

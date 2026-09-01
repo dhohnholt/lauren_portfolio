@@ -13,3 +13,5 @@
 - Added an RLS-protected site settings migration and explicit admin allowlist.
 - Configured `laurenhohnholt@gmail.com` as the portfolio administrator.
 - Split the administrator assignment into an idempotent follow-up migration for databases where the headshot tables already exist.
+- Added four presentation URL fields to the admin page and an RLS migration limiting project URL updates to allowlisted admins.
+- Added paired preview-image URL fields and connected saved presentation and preview URLs to the public project viewer.
