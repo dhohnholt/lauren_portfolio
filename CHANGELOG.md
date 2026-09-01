@@ -21,3 +21,5 @@
 - Reworked the project viewer into a Netflix-style three-card carousel with one preview on each side, black gradient falloff, keyboard navigation, and project position controls.
 - Added a complete admin password-recovery flow with reset-email requests, secure recovery-session handling, password confirmation, and a dedicated reset route.
 - Configured the password-recovery documentation for `laurenhohnholt.com`.
+- Rebalanced the public page palette so plum is an accent, adding charcoal, sage, moss, and cream tones for clearer section contrast and smoother visual progression.
+- Strengthened the main project viewer drop shadow to separate it visually from the side previews.
