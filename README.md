@@ -39,4 +39,18 @@ Run `20260901011842_add_portfolio_content_and_theme.sql` last to enable editable
 
 Run `20260901015757_add_admin_contact_inbox.sql` to let the public Contact form accept messages and expose them only to Lauren's allowlisted admin account.
 
+Run `20260901022844_add_headshot_framing_controls.sql` to add the saved headshot zoom and vertical-position controls used by the admin Brand panel.
+
+## Contact email notifications
+
+The Contact form calls the `notify-contact` Supabase Edge Function. The function validates and saves each message to the private admin inbox, then sends a branded notification to `laurenhohnholt@gmail.com` through Resend.
+
+Set `RESEND_API_KEY` under Supabase Edge Function Secrets, then deploy the function:
+
+```bash
+supabase functions deploy notify-contact
+```
+
+The default sender is `Lauren Hohnholt Portfolio <contact@laurenhohnholt.com>`. If Resend is configured for a different verified sender, add a `CONTACT_FROM_EMAIL` Edge Function secret containing the complete sender value. Email delivery errors are logged by the function, while the original message remains available in `/admin`.
+
 For password recovery, set the Supabase Site URL to `https://laurenhohnholt.com` and add `https://laurenhohnholt.com/admin/reset-password` under Authentication → URL Configuration → Redirect URLs. The “Forgot password?” action on `/admin` sends the recovery email to this route.

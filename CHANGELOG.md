@@ -30,3 +30,6 @@
 - Automatically convert public Canva view links to Canva's iframe-compatible embed format in the project viewer.
 - Added an accessible in-site fullscreen lightbox for project presentations with Escape and backdrop dismissal.
 - Replaced the default favicon with Lauren's circular monogram, including transparent browser and Apple touch icon sizes.
+- Added a Supabase Edge Function that stores Contact submissions and sends branded Resend notifications to Lauren with one-click replies.
+- Added live headshot zoom and vertical-position sliders to the admin studio with saved framing on the public homepage.
+- Made the contact notification Edge Function dashboard-deployable with explicit, pinned Deno package specifiers.

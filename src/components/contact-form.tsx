@@ -17,7 +17,7 @@ export function ContactForm() {
     if (company) { setStatus("Thank you. Your message has been sent."); return; }
 
     setBusy(true); setStatus("");
-    const { error } = await supabase.from("contact_messages").insert({ name: name.trim(), email: email.trim(), message: message.trim() });
+    const { error } = await supabase.functions.invoke("notify-contact", { body: { name: name.trim(), email: email.trim(), message: message.trim(), company } });
     if (error) setStatus("We couldn't send your message. Please check the form and try again.");
     else { setName(""); setEmail(""); setMessage(""); setStatus("Thank you—your message has been sent to Lauren."); }
     setBusy(false);
