@@ -1,40 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase/client";
 
 export function AdminKeyboardShortcut() {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const pressedKeys = useRef(new Set<string>());
 
   useEffect(() => {
-    if (!supabase) return;
+    async function openAdminOrHome() {
+      const { supabase } = await import("@/lib/supabase/client");
+      const { data } = await supabase?.auth.getSession() ?? { data: { session: null } };
+      router.push(data.session?.user ? "/admin" : "/");
+    }
 
-    let isActive = true;
-    void supabase.auth.getUser().then(({ data }) => {
-      if (isActive) setIsAuthenticated(Boolean(data.user));
-    });
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(Boolean(session?.user));
-    });
-
-    return () => {
-      isActive = false;
-      listener.subscription.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       const key = event.key.toLowerCase();
       pressedKeys.current.add(key);
 
-      if (isAuthenticated && event.metaKey && key === "l") event.preventDefault();
-      if (isAuthenticated && event.metaKey && pressedKeys.current.has("l") && pressedKeys.current.has("h")) {
+      if (event.metaKey && key === "l") event.preventDefault();
+      if (event.metaKey && pressedKeys.current.has("l") && pressedKeys.current.has("h")) {
         event.preventDefault();
-        router.push("/admin");
+        void openAdminOrHome();
       } else if (event.metaKey && key === "h") {
         event.preventDefault();
         router.push("/");
@@ -58,7 +45,7 @@ export function AdminKeyboardShortcut() {
       window.removeEventListener("blur", clearPressedKeys);
       clearPressedKeys();
     };
-  }, [isAuthenticated, router]);
+  }, [router]);
 
   return null;
 }

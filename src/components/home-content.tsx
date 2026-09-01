@@ -1,21 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Headshot } from "@/components/headshot";
+import { usePortfolioSettings } from "@/components/portfolio-settings-provider";
 import { ProjectViewer } from "@/components/project-viewer";
-import { DEFAULT_PORTFOLIO_SETTINGS, type PortfolioSettings } from "@/lib/portfolio-settings";
-import { supabase } from "@/lib/supabase/client";
 
 export function HomeContent() {
-  const [content, setContent] = useState<PortfolioSettings>(DEFAULT_PORTFOLIO_SETTINGS);
-
-  useEffect(() => {
-    if (!supabase) return;
-    void supabase.from("portfolio_settings").select("*").eq("id", 1).maybeSingle().then(({ data }) => {
-      if (data) setContent(data as PortfolioSettings);
-    });
-  }, []);
+  const content = usePortfolioSettings();
 
   return (
     <main>

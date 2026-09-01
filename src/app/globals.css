@@ -95,7 +95,7 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
 .carousel-dots button.is-active::after { background:var(--sage); }
 .arrow { font-size:2rem; line-height:1; }
 .experience-section { background:linear-gradient(135deg,var(--olive),var(--moss)); color:var(--white); padding-block:108px; position:relative; overflow:hidden; }
-.experience-section::before { content:""; position:absolute; inset:0; background:url("/images/circuit-board-overlay.png") center/cover no-repeat; opacity:.11; mix-blend-mode:luminosity; pointer-events:none; }
+.experience-section::before { content:""; position:absolute; inset:0; background:url("/images/circuit-board-overlay.webp") center/cover no-repeat; opacity:.11; mix-blend-mode:luminosity; pointer-events:none; }
 .experience-section .section-shell { position:relative; z-index:1; }
 .experience-grid { display:grid; grid-template-columns:1fr 1fr; gap:10vw; }
 .experience-grid h2 { font-size:clamp(3rem,6vw,6rem); margin:0; }
@@ -150,12 +150,12 @@ h1,h2,h3 { font-family:Georgia,"Times New Roman",serif; letter-spacing:-.04em; l
 .contact-grid { display:grid; grid-template-columns:1fr .9fr; gap:10vw; align-items:start; }
 .contact-page .page-intro .eyebrow { color:var(--olive); }
 .contact-page .page-intro h1 { color:var(--berry); }
-.contact-form { background:var(--olive); color:var(--white); padding:32px; display:grid; gap:22px; border-top:6px solid var(--berry); box-shadow:14px 14px 0 color-mix(in srgb,var(--berry) 88%,transparent); }
+.contact-form { background:var(--olive); color:var(--white); padding:32px; display:grid; gap:22px; border-top:6px solid var(--sand); box-shadow:14px 14px 0 var(--sand); }
 .contact-form label { display:grid; gap:8px; color:var(--cream); font-size:.76rem; font-weight:800; text-transform:uppercase; letter-spacing:.12em; }
 .contact-form input,.contact-form textarea { width:100%; border:0; border-bottom:1px solid rgba(255,255,255,.7); background:transparent; color:var(--white); padding:12px 0; outline:none; text-transform:none; letter-spacing:0; resize:vertical; }
 .contact-form input::placeholder,.contact-form textarea::placeholder { color:rgba(255,255,255,.62); opacity:1; }
 .contact-form input:focus,.contact-form textarea:focus { border-color:var(--cream); box-shadow:0 2px 0 var(--cream); }
-.contact-form .button-primary { background:var(--berry); color:var(--white); }
+.contact-form .button-primary { background:var(--sand); color:var(--ink); }
 .contact-form small { color:var(--cream); line-height:1.5; opacity:.82; }
 .form-honeypot { position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 .contact-status { min-height:1.5em; display:block; }

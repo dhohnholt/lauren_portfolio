@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { publicRestGet } from "@/lib/supabase/public-client";
 
 export const DEFAULT_HEADSHOT_URL = "https://images.unsplash.com/photo-1699899657680-421c2c2d5064?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
@@ -14,13 +14,8 @@ export function Headshot() {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    if (!supabase) return;
-
-    void supabase
-      .from("site_settings")
-      .select("key, value")
-      .in("key", ["headshot_url", "headshot_zoom", "headshot_shift_x", "headshot_shift_y"])
-      .then(({ data }) => {
+    const keys = "headshot_url,headshot_zoom,headshot_shift_x,headshot_shift_y";
+    void publicRestGet<{ key: string; value: string }[]>(`site_settings?select=key,value&key=in.(${keys})`).then((data) => {
         for (const setting of data ?? []) {
           if (setting.key === "headshot_url" && setting.value) setUrl(setting.value);
           if (setting.key === "headshot_zoom") setZoom(Math.min(200, Math.max(100, Number(setting.value) || 100)));

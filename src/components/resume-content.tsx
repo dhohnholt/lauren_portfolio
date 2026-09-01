@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DEFAULT_RESUME_CONTENT, normalizeResumeContent, type ResumeContent as ResumeContentType } from "@/lib/resume-content";
-import { supabase } from "@/lib/supabase/client";
+import { publicRestGet } from "@/lib/supabase/public-client";
 
 function BulletList({ items }: { items: string[] }) {
   return <ul className="resume-bullets">{items.filter(Boolean).map((item, index) => <li key={`${index}-${item}`}>{item}</li>)}</ul>;
@@ -12,9 +12,8 @@ export function ResumeContent() {
   const [content, setContent] = useState<ResumeContentType>(DEFAULT_RESUME_CONTENT);
 
   useEffect(() => {
-    if (!supabase) return;
-    void supabase.from("resume_content").select("content").eq("id", 1).maybeSingle().then(({ data }) => {
-      if (data?.content) setContent(normalizeResumeContent(data.content));
+    void publicRestGet<{ content: unknown }[]>("resume_content?select=content&id=eq.1&limit=1").then((rows) => {
+      if (rows?.[0]?.content) setContent(normalizeResumeContent(rows[0].content));
     });
   }, []);
 

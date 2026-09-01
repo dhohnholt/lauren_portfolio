@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { KeyboardEvent, useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { publicRestGet } from "@/lib/supabase/public-client";
 
 type Project = { id: number; title: string; category: string; summary: string; canva_url: string | null; thumbnail_url: string | null };
 
@@ -38,8 +38,8 @@ export function ProjectViewer() {
   const isPresentationLoaded = loadedPresentationId === project.id;
 
   useEffect(() => {
-    if (!supabase) return;
-    void supabase.from("projects").select("id, title, category, summary, canva_url, thumbnail_url").eq("is_published", true).order("sort_order").then(({ data }) => {
+    const fields = "id,title,category,summary,canva_url,thumbnail_url";
+    void publicRestGet<Project[]>(`projects?select=${fields}&is_published=eq.true&order=sort_order.asc`).then((data) => {
       if (data?.length) { setProjects(data); setActive(0); }
     });
   }, []);

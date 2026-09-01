@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { invokePublicFunction } from "@/lib/supabase/public-client";
 
 type NotifyContactResult = {
   success?: boolean;
@@ -19,13 +19,10 @@ export function ContactForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!supabase) { setStatus("The contact form is temporarily unavailable. Please try again shortly."); return; }
     if (company) { setStatus("Thank you. Your message has been sent."); return; }
 
     setBusy(true); setStatus("");
-    const { data, error } = await supabase.functions.invoke<NotifyContactResult>("notify-contact", {
-      body: { name: name.trim(), email: email.trim(), message: message.trim(), company },
-    });
+    const { data, error } = await invokePublicFunction<NotifyContactResult>("notify-contact", { name: name.trim(), email: email.trim(), message: message.trim(), company });
 
     if (error || !data?.success) {
       setStatus("We couldn't send your message. Please check the form and try again.");
