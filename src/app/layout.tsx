@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     url: "/",
     siteName: "Lauren Hohnholt",
-    images: [{ url: "/lauren-hohnholt-social-card.jpg", width: 1200, height: 630, alt: "Lauren Hohnholt and an introduction to her electrical engineering portfolio" }],
+    images: [{ url: "/lauren-hohnholt-social-card-2026.png", width: 1200, height: 630, alt: "Lauren Hohnholt and an introduction to her electrical engineering portfolio" }],
     locale: "en_US",
     type: "website",
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Lauren Hohnholt | Electrical Engineering Portfolio",
     description: siteDescription,
-    images: [{ url: "/lauren-hohnholt-social-card.jpg", alt: "Lauren Hohnholt and an introduction to her electrical engineering portfolio" }],
+    images: [{ url: "/lauren-hohnholt-social-card-2026.png", alt: "Lauren Hohnholt and an introduction to her electrical engineering portfolio" }],
   },
 };
 
