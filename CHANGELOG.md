@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a LinkedIn profile button beside the homepage contact call to action.
 - Updated the social-sharing preview image with Lauren's new headshot.
 - Hardened the Supabase database with least-privilege API grants, indexed foreign keys, and consolidated project read policies.
 - Restored automatic loading for the active Canva presentation so visitors can interact with it without an extra click.
